@@ -84,7 +84,7 @@ public class TodoListService_Test
         await repository.UpdateTodoItem(newPut);
         
         // Assert
-        Assert.AreEqual(newPut, todoContext.TodoItems.Find(1));
+        Assert.AreEqual(newPost,todoContext.TodoItems.Find());
     }
 
     [Test]
