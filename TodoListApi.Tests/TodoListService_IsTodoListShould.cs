@@ -30,9 +30,10 @@ public class TodoListService_Test
 
         // Act
         await repository.AddTodoItem(newPost);
-        await repository.GetAllTodoLists();
+        var result = await repository.GetAllTodoLists();
+
         //Assert
-        Assert.AreEqual(1, await todoContext.TodoItems.CountAsync());
+        Assert.AreEqual(newPost, result.Data.First());
 
     }
 
@@ -65,15 +66,15 @@ public class TodoListService_Test
         TodoListService repository = new TodoListService(todoContext);
         var newPost = new ToDoItem()
         {
-            Id = 0,
-            Timestamp = DateTime.UtcNow,
+            Id = 1,
+            Timestamp = DateTime.Today,
             Text = "TodoItem_Test.",
             Done = false
         };
         var newPut = new ToDoItem()
         {
-            Id = 0,
-            Timestamp = DateTime.UtcNow,
+            Id = 1,
+            Timestamp = DateTime.Today,
             Text = "UpdateTodoItem_Test.",
             Done = true
         };
@@ -81,9 +82,9 @@ public class TodoListService_Test
         // Act
         await repository.AddTodoItem(newPost);
         await repository.UpdateTodoItem(newPut);
-
+        
         // Assert
-        //Assert.AreEqual(newPut, await todoContext.TodoItems.CountAsync());
+        Assert.AreEqual(newPut, todoContext.TodoItems.Find(1));
     }
 
     [Test]
