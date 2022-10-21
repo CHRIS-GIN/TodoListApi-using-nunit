@@ -14,13 +14,17 @@ public class TodoListService_Test
         dbContextOptions = new DbContextOptionsBuilder<TodoContext>()
             .UseInMemoryDatabase(databaseName: "TodoListsDatabase")
             .Options;
+        var todoContext = new TodoContext(dbContextOptions);
+        todoContext.TodoItems.Add(new ToDoItem
+        {
+            Id = 1,
+            Timestamp = DateTime.Today,
+            Text = "Initial Item",
+            Done = true
+        });
+        todoContext.SaveChanges();
     }
 
-    // private TodoContext todoContext = new TodoContext(new DbContextOptionsBuilder<TodoContext>()
-    //         .UseInMemoryDatabase(databaseName: "TodoListsDatabase")
-    //         .Options);
-
-    //         todoContext.I
 
     [Test]
     public async Task When_GetAll_Then_It_Should_Return_AllTodoItems()
