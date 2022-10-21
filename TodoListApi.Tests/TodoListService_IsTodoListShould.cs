@@ -15,6 +15,13 @@ public class TodoListService_Test
             .UseInMemoryDatabase(databaseName: "TodoListsDatabase")
             .Options;
     }
+
+    // private TodoContext todoContext = new TodoContext(new DbContextOptionsBuilder<TodoContext>()
+    //         .UseInMemoryDatabase(databaseName: "TodoListsDatabase")
+    //         .Options);
+
+    //         todoContext.I
+
     [Test]
     public async Task When_GetAll_Then_It_Should_Return_AllTodoItems()
     {
@@ -45,7 +52,7 @@ public class TodoListService_Test
         TodoListService repository = new TodoListService(todoContext);
         var newPost = new ToDoItem()
         {
-            Id = 0,
+            Id = 2,
             Timestamp = DateTime.UtcNow,
             Text = "AddTodoItem_Test.",
             Done = false
@@ -82,9 +89,10 @@ public class TodoListService_Test
         // Act
         await repository.AddTodoItem(newPost);
         await repository.UpdateTodoItem(newPut);
-        
+        System.Console.WriteLine(todoContext.TodoItems.Find(1));
+
         // Assert
-        Assert.AreEqual(newPost,todoContext.TodoItems.Find());
+        Assert.AreEqual(newPut, todoContext.TodoItems.Find(1));
     }
 
     [Test]
