@@ -15,7 +15,7 @@ public class TodoListService_Test
             .UseInMemoryDatabase(databaseName: "TodoListsDatabase")
             .Options;
         var todoContext = new TodoContext(dbContextOptions);
-        todoContext.TodoItems.Add(new ToDoItem
+        todoContext.TodoItems.Add(new ToDoItem()
         {
             Id = 1,
             Timestamp = DateTime.Today,
@@ -31,20 +31,18 @@ public class TodoListService_Test
     {
         var todoContext = new TodoContext(dbContextOptions);
         TodoListService repository = new TodoListService(todoContext);
-        var newPost = new ToDoItem()
-        {
-            Id = 0,
-            Timestamp = DateTime.UtcNow,
-            Text = "GetAll_Test.",
-            Done = false
-        };
 
         // Act
-        await repository.AddTodoItem(newPost);
         var result = await repository.GetAllTodoLists();
-
+        var getAllTest = new ToDoItem()
+        {
+            Id = 1,
+            Timestamp = DateTime.Today,
+            Text = "Initial Item",
+            Done = true
+        };
         //Assert
-        Assert.AreEqual(newPost, result.Data.First());
+        Assert.AreEqual(getAllTest, result.Data.First());
 
     }
 
@@ -54,7 +52,7 @@ public class TodoListService_Test
         // Arrange
         var todoContext = new TodoContext(dbContextOptions);
         TodoListService repository = new TodoListService(todoContext);
-        var newPost = new ToDoItem()
+        var postItemTest = new ToDoItem()
         {
             Id = 2,
             Timestamp = DateTime.UtcNow,
@@ -63,10 +61,10 @@ public class TodoListService_Test
         };
 
         // Act
-        await repository.AddTodoItem(newPost);
+        await repository.AddTodoItem(postItemTest);
 
         // Assert
-        Assert.AreEqual(1, await todoContext.TodoItems.CountAsync());
+        Assert.AreEqual(2, await todoContext.TodoItems.CountAsync());
     }
 
     [Test]
@@ -75,28 +73,19 @@ public class TodoListService_Test
         // Arrange
         var todoContext = new TodoContext(dbContextOptions);
         TodoListService repository = new TodoListService(todoContext);
-        var newPost = new ToDoItem()
-        {
-            Id = 1,
-            Timestamp = DateTime.Today,
-            Text = "TodoItem_Test.",
-            Done = false
-        };
-        var newPut = new ToDoItem()
+        
+        var putItemTest = new ToDoItem()
         {
             Id = 1,
             Timestamp = DateTime.Today,
             Text = "UpdateTodoItem_Test.",
-            Done = true
+            Done = false
         };
 
         // Act
-        await repository.AddTodoItem(newPost);
-        await repository.UpdateTodoItem(newPut);
-        System.Console.WriteLine(todoContext.TodoItems.Find(1));
-
+        await repository.UpdateTodoItem(putItemTest);
         // Assert
-        Assert.AreEqual(newPut, todoContext.TodoItems.Find(1));
+        Assert.AreEqual(putItemTest, todoContext.TodoItems.Find(1));
     }
 
     [Test]
@@ -105,17 +94,8 @@ public class TodoListService_Test
         // Arrange
         var todoContext = new TodoContext(dbContextOptions);
         TodoListService repository = new TodoListService(todoContext);
-        var newPost = new ToDoItem()
-        {
-            Id = 0,
-            Timestamp = DateTime.UtcNow,
-            Text = "DeleteTodoItem_Test.",
-            Done = false
-        };
-
         // Act
-        await repository.AddTodoItem(newPost);
-        await repository.DeleteTodoList(newPost.Id);
+        await repository.DeleteTodoList(1);
 
         // Assert
         Assert.AreEqual(0, await todoContext.TodoItems.CountAsync());
