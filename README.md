@@ -1,6 +1,7 @@
 # TodoListApi-using-nunit
 ## October Practice
 Test0
+<<<<<<< HEAD
 1. This is test1.
 2. This is test2.
 3. This is test3.
@@ -12,3 +13,6 @@ Test0
 =======
 6. This is test6.
 >>>>>>> commit6
+=======
+Test1
+>>>>>>> 3b91f4c4e8c8a2279035c9f7ab463a44784cb088
