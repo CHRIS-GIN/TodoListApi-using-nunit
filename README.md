@@ -1,7 +1,7 @@
 # TodoListApi-using-nunit
 ## October Practice
 Test0
-1. This is test1.
+ 1. This is test1.
 2. This is test2.
 3. This is test3.
 4. This is test4.
